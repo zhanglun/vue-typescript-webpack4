@@ -9,9 +9,9 @@ module.exports = {
     app: path.resolve(SRC_PATH, 'index.ts'),
   },
   output: {
-    path: path.resolve(__dirname, '../dist/assets'),
-    filename: '[name].[hash].js',
-    publicPath: 'dist',
+    path: path.resolve(__dirname, '../dist'),
+    filename: 'script/[name].[hash].js',
+    publicPath: '/',
   },
   module: {
     rules: [

@@ -1,3 +1,4 @@
+const path = require('path');
 const portfinder = require('portfinder');
 const Express = require('express');
 const webpack = require('webpack');
@@ -24,6 +25,11 @@ app.use(webpackDevMiddleware(compiler, {
     ignored: [/node_modules/],
   },
 }));
+
+app.use(Express.static('../dist'));
+app.get("/", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "../dist/index.html"))
+);
 app.use(webpackHotMiddleware(compiler));
 
 portfinder.getPort((err, port) => {
