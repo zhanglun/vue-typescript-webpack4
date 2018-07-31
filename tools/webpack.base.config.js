@@ -1,6 +1,6 @@
 const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const SRC_PATH = path.resolve(__dirname, '../src');
 
@@ -29,25 +29,31 @@ module.exports = {
         loader: 'eslint-loader',
       },
       {
-        test: /\.vue$/,
-        loader: 'vue-loader',
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+        ]
       },
-     	{
+      {
+        test: /\.vue$/,
+        use: 'vue-loader',
+      },
+      {
         test: /\.ts|.tsx$/,
+        loader: 'ts-loader',
         exclude: [
           path.resolve(__dirname, 'node_modules'),
         ],
-        use: () => {
-          return [
-            {
-              loader: ['ts-loader'],
-            },
-          ];
+        options: {
+          transpileOnly: true,
+          appendTsSuffixTo: [/\.vue$/],
         },
       },
     ]
   },
   resolve: {
+    extensions: ['.ts', '.js', '.vue'],
     alias: {
       'vue': path.resolve('node_modules', 'vue/dist/vue.js'),
     },
@@ -56,5 +62,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(SRC_PATH, 'index.html'),
     }),
+    new VueLoaderPlugin(),
   ],
 };

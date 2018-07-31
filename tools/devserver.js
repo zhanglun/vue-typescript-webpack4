@@ -7,6 +7,7 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackConfig = require('./webpack.dev.config.js');
 
 const app = new Express();
+console.log(webpackConfig.module.rules);
 const compiler = webpack(webpackConfig);
 
 app.use(webpackDevMiddleware(compiler, {
@@ -14,7 +15,7 @@ app.use(webpackDevMiddleware(compiler, {
   quite: false,
   noInfo: false,
   headers: {
-      'X-Custom-Header': 'yes',
+    'X-Custom-Header': 'yes',
   },
   stats: {
     colors: true,
@@ -27,13 +28,13 @@ app.use(webpackDevMiddleware(compiler, {
 }));
 
 app.use(Express.static('../dist'));
-app.get("/", (req, res) =>
-    res.sendFile(path.resolve(__dirname, "../dist/index.html"))
+app.get('/', (req, res) =>
+  res.sendFile(path.resolve(__dirname, '../dist/index.html'))
 );
 app.use(webpackHotMiddleware(compiler));
 
 portfinder.getPort((err, port) => {
   app.listen(port, () => {
-      console.log(`Server start at: http://localhost:${port}`);
+    console.log(`Server start at: http://localhost:${port}`);
   });
 });

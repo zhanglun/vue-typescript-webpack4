@@ -1,16 +1,11 @@
-console.log(1231234);
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+// import router from './routers';
+import AppView from './app.vue';
 
-interface SquareConfig {
-    color?: string;
-    width?: number;
-}
+Vue.use(VueRouter);
 
-function createSquare(config: SquareConfig): { color: string; area: number } {
-    // ...
-    return {
-        color: '123',
-        area: 234
-    };
-}
-
-let mySquare = createSquare({ width: 100 });
+const app = new Vue({
+//   router,
+  render (h) { return h(AppView) }
+}).$mount('#app');
